@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * JPA-сущность рекомендаций упражнений пользователю.
+ */
 @Entity
 @Table(name = "recommendations")
 public class RecommendationsEntity {

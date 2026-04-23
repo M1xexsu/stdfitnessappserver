@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * JPA-сущность пользовательских настроек.
+ */
 @Entity
 @Table(name = "Settings")
 public class SettingsEntity {

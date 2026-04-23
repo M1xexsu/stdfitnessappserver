@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * JPA-сущность уведомления пользователя.
+ */
 @Entity
 @Table(name = "Notification")
 public class NotificationEntity {

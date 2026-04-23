@@ -2,6 +2,9 @@ package github.m1xexsu.stdfitnessappserver.entity;
 
 import jakarta.persistence.*;
 
+/**
+ * JPA-сущность упражнения из справочника.
+ */
 @Entity
 @Table(name = "Exercises")
 public class ExercisesEntity {

@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * JPA-сущность записи журнала тренировок.
+ */
 @Entity
 @Table(name="Journal")
 public class JournalEntity {

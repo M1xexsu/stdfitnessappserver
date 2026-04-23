@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 
+/**
+ * JPA-сущность экспорта пользовательских данных.
+ */
 @Entity
 @Table(name = "Export")
 public class ExportEntity {
