@@ -24,6 +24,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
      *
      * @param username имя пользователя
      * @return {@code true}, если пользователь существует
+     * @return {@code true}, если пользователь существует
      */
     boolean existsByUsername(String username);
 }

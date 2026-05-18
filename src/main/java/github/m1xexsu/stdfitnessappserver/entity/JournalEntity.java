@@ -12,21 +12,78 @@ import java.util.List;
 @Table(name="Journal")
 public class JournalEntity {
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long journal_id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", table = "User")
-    private UserEntity user_id;
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private UserEntity user;
 
     @OneToMany
-    @JoinColumn(name = "exercise_id", referencedColumnName = "exercise_id", table = "Exercises")
-    private List<ExercisesEntity> exercise_id;
+    @JoinColumn(name = "exercise_id", referencedColumnName = "exercise_id")
+    private List<ExercisesEntity> exercises;
 
     @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     private int time_minutes;
     private int score;
     private int burnt;
+
+    public Long getJournal_id() {
+        return journal_id;
+    }
+
+    public void setJournal_id(Long journal_id) {
+        this.journal_id = journal_id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public List<ExercisesEntity> getExercises() {
+        return exercises;
+    }
+
+    public void setExercises(List<ExercisesEntity> exercises) {
+        this.exercises = exercises;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public int getTime_minutes() {
+        return time_minutes;
+    }
+
+    public void setTime_minutes(int time_minutes) {
+        this.time_minutes = time_minutes;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getBurnt() {
+        return burnt;
+    }
+
+    public void setBurnt(int burnt) {
+        this.burnt = burnt;
+    }
 
 }
