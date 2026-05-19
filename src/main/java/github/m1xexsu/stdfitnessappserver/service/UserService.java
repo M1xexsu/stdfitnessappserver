@@ -8,6 +8,7 @@ import github.m1xexsu.stdfitnessappserver.repository.ActivityRepository;
 import github.m1xexsu.stdfitnessappserver.repository.ProfileRepository;
 import github.m1xexsu.stdfitnessappserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 import java.util.Locale;
@@ -23,11 +24,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final ActivityRepository activityRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, ProfileRepository profileRepository, ActivityRepository activityRepository) {
+    public UserService(UserRepository userRepository, ProfileRepository profileRepository, ActivityRepository activityRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.activityRepository = activityRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -45,7 +48,7 @@ public class UserService {
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setAccount_status(1);
         return userRepository.save(user);
     }
@@ -117,7 +120,7 @@ public class UserService {
      * @return {@code true}, если пароли совпадают
      */
     public boolean validatePassword(String rawPassword, String storedPassword) {
-        return rawPassword.equals(storedPassword);
+        return passwordEncoder.matches(rawPassword, storedPassword);
     }
 
     private Set<String> normalizeIncludes(Set<String> includes) {

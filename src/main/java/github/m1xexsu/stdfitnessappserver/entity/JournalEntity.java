@@ -19,8 +19,12 @@ public class JournalEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserEntity user;
 
-    @OneToMany
-    @JoinColumn(name = "exercise_id", referencedColumnName = "exercise_id")
+    @ManyToMany
+    @JoinTable(
+        name = "Journal_Exercises",
+        joinColumns = @JoinColumn(name = "journal_id"),
+        inverseJoinColumns = @JoinColumn(name = "exercise_id")
+    )
     private List<ExercisesEntity> exercises;
 
     @Column(nullable = false)

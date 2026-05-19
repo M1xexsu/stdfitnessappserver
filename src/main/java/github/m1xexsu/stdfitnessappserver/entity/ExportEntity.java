@@ -15,7 +15,7 @@ public class ExportEntity {
     private long export_id;
 
     @OneToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_id", table = "User")
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
     private UserEntity user_id;
 
     @Column(nullable = false)

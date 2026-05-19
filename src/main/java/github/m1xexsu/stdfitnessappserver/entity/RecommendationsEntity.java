@@ -15,11 +15,11 @@ public class RecommendationsEntity {
     private Long recommendation_id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_id", table = "User")
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
     private UserEntity user_id;
 
     @ManyToOne
-    @JoinColumn(name="exercise_id", referencedColumnName = "exercise_id", table = "Exercises")
+    @JoinColumn(name="exercise_id", referencedColumnName = "exercise_id")
     private ExercisesEntity exercise_id;
 
 

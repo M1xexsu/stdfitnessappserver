@@ -15,7 +15,7 @@ public class NotificationEntity {
     private Long notification_id;
 
     @ManyToOne
-    @JoinColumn(name="user_id", referencedColumnName = "user_id", table = "User")
+    @JoinColumn(name="user_id", referencedColumnName = "user_id")
     private UserEntity user_id;
 
     @Column(nullable = false)
