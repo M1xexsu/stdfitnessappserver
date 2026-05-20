@@ -17,7 +17,9 @@ public class UserEntity {
     private String username;
     private String email;
     private String password;
+    @Column()
     private Date date_of_birth;
+    @Column()
     private int account_status;
 
     public Long getUser_id() {

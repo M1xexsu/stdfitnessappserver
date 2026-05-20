@@ -61,6 +61,7 @@ public class ActivityController {
                     .orElseThrow(() -> new RuntimeException("User not found"));
             return ResponseEntity.ok(activityService.getActivitiesByUser(user));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
@@ -77,6 +78,7 @@ public class ActivityController {
             ActivityEntity created = activityService.createActivity(activity);
             return ResponseEntity.ok(created);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
@@ -94,6 +96,7 @@ public class ActivityController {
             ActivityEntity updated = activityService.updateActivity(id, activity);
             return ResponseEntity.ok(updated);
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }

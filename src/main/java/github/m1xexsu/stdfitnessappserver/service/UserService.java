@@ -42,9 +42,9 @@ public class UserService {
      * @return сохраненная сущность пользователя
      */
     public UserEntity registerUser(String username, String email, String password) {
-        if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username already exists");
-        }
+        //if (userRepository.existsByUsername(username)) {
+        //    throw new RuntimeException("Username already exists");
+        //}
         UserEntity user = new UserEntity();
         user.setUsername(username);
         user.setEmail(email);

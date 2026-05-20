@@ -16,9 +16,12 @@ curl -X POST http://localhost:8080/auth/register \
 **Ответ:**
 ```json
 {
-  "user_id": 1,
-  "username": "testuser",
-  "message": "User registered successfully"
+  "expiresIn":3600,
+  "message":"User registered successfully",
+  "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInVpZCI6MSwiZXhwIjoxNzc5MjgyODUyLCJpYXQiOjE3NzkyNzkyNTIsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.BLFTi9kyDAp4L3uAih3dn_LFEHwUvdhbwMksWlb3oIQ",
+  "tokenType":"Bearer",
+  "user_id":1,
+  "username":"testuser"
 }
 ```
 

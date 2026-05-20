@@ -49,6 +49,7 @@ public class AuthController {
                 jwtService.getExpirationSeconds()
             ));
         } catch (Exception e) {
+            e.printStackTrace();
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
