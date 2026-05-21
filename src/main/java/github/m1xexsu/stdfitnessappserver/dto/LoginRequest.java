@@ -4,22 +4,22 @@ package github.m1xexsu.stdfitnessappserver.dto;
  * DTO запроса на вход пользователя.
  */
 public class LoginRequest {
-    private String username;
+    private String email;
     private String password;
 
     public LoginRequest() {}
 
-    public LoginRequest(String username, String password) {
-        this.username = username;
+    public LoginRequest(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
     public String getUsername() {
-        return username;
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

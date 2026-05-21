@@ -14,17 +14,17 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     /**
      * Ищет пользователя по username.
      *
-     * @param username имя пользователя
+     * @param email имя пользователя
      * @return найденный пользователь или пустой результат
      */
-    Optional<UserEntity> findByUsername(String username);
+    Optional<UserEntity> findByUsername(String email);
 
     /**
      * Проверяет существование пользователя по username.
      *
-     * @param username имя пользователя
+     * @param email имя пользователя
      * @return {@code true}, если пользователь существует
      * @return {@code true}, если пользователь существует
      */
-    boolean existsByUsername(String username);
+    boolean existsByUsername(String email);
 }

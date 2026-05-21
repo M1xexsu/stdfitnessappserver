@@ -16,12 +16,12 @@ curl -X POST http://localhost:8080/auth/register \
 **Ответ:**
 ```json
 {
-  "expiresIn":3600,
+  "user_id":1,
+  "username":"testuser",
   "message":"User registered successfully",
   "token":"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInVpZCI6MSwiZXhwIjoxNzc5MjgyODUyLCJpYXQiOjE3NzkyNzkyNTIsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.BLFTi9kyDAp4L3uAih3dn_LFEHwUvdhbwMksWlb3oIQ",
   "tokenType":"Bearer",
-  "user_id":1,
-  "username":"testuser"
+  "expiresIn":3600
 }
 ```
 
@@ -44,7 +44,10 @@ curl -X POST http://localhost:8080/auth/login \
 {
   "user_id": 1,
   "username": "testuser",
-  "message": "Login successful"
+  "message": "Login successful",
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0dXNlciIsInVpZCI6MSwiZXhwIjoxNzc5MjgyODUyLCJpYXQiOjE3NzkyNzkyNTIsInVzZXJuYW1lIjoidGVzdHVzZXIifQ.BLFTi9kyDAp4L3uAih3dn_LFEHwUvdhbwMksWlb3oIQ",
+  "tokenType": "Bearer",
+  "expiresIn": 3600
 }
 ```
 
@@ -54,7 +57,8 @@ curl -X POST http://localhost:8080/auth/login \
 
 ### GET /activities
 ```bash
-curl http://localhost:8080/activities
+curl http://localhost:8080/activities \
+  -H "Authorization: Bearer <token>"
 ```
 
 **Ответ:**
@@ -83,6 +87,7 @@ curl http://localhost:8080/activities
 ```bash
 curl -X POST http://localhost:8080/activities \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{
     "user": {
       "user_id": 1
@@ -115,7 +120,8 @@ curl -X POST http://localhost:8080/activities \
 
 ### GET /activities/{id}
 ```bash
-curl http://localhost:8080/activities/1
+curl http://localhost:8080/activities/1 \
+  -H "Authorization: Bearer <token>"
 ```
 
 ---
@@ -124,7 +130,8 @@ curl http://localhost:8080/activities/1
 
 ### GET /activities/user/{userId}
 ```bash
-curl http://localhost:8080/activities/user/1
+curl http://localhost:8080/activities/user/1 \
+  -H "Authorization: Bearer <token>"
 ```
 
 ---
@@ -135,6 +142,7 @@ curl http://localhost:8080/activities/user/1
 ```bash
 curl -X PUT http://localhost:8080/activities/1 \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
   -d '{
     "activity_date": "2026-04-24T10:30:00Z",
     "steps": 6000,
@@ -149,7 +157,8 @@ curl -X PUT http://localhost:8080/activities/1 \
 
 ### DELETE /activities/{id}
 ```bash
-curl -X DELETE http://localhost:8080/activities/1
+curl -X DELETE http://localhost:8080/activities/1 \
+  -H "Authorization: Bearer <token>"
 ```
 
 **Ответ:**
@@ -161,23 +170,85 @@ curl -X DELETE http://localhost:8080/activities/1
 
 ---
 
+## 9. Работа со справочником упражнений
+
+### GET /exercises
+```bash
+curl http://localhost:8080/exercises \
+  -H "Authorization: Bearer <token>"
+```
+
+**Ответ:**
+```json
+[
+  {
+    "exercise_id": 1,
+    "name": "Push-up",
+    "description": "Классические отжимания от пола",
+    "file_path": "/images/exercises/push-up.png"
+  }
+]
+```
+
+### GET /exercises/{id}
+```bash
+curl http://localhost:8080/exercises/1 \
+  -H "Authorization: Bearer <token>"
+```
+
+### POST /exercises
+```bash
+curl -X POST http://localhost:8080/exercises \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "name": "Push-up",
+    "description": "Классические отжимания от пола",
+    "file_path": "/images/exercises/push-up.png"
+  }'
+```
+
+### PUT /exercises/{id}
+```bash
+curl -X PUT http://localhost:8080/exercises/1 \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <token>" \
+  -d '{
+    "name": "Push-up",
+    "description": "Обновленное описание упражнения",
+    "file_path": "/images/exercises/push-up-v2.png"
+  }'
+```
+
+### DELETE /exercises/{id}
+```bash
+curl -X DELETE http://localhost:8080/exercises/1 \
+  -H "Authorization: Bearer <token>"
+```
+
+---
+
 ## Структура проекта
 
 ```
 src/main/java/github/m1xexsu/stdfitnessappserver/
 ├── controller/
 │   ├── AuthController.java       # Регистрация и вход
-│   └── ActivityController.java   # CRUD операции для активности
+│   ├── ActivityController.java   # CRUD операции для активности
+│   └── ExercisesController.java  # CRUD операции для упражнений
 ├── service/
 │   ├── UserService.java          # Бизнес-логика пользователя
-│   └── ActivityService.java      # Бизнес-логика активности
+│   ├── ActivityService.java      # Бизнес-логика активности
+│   └── ExercisesService.java     # Бизнес-логика упражнений
 ├── repository/
 │   ├── UserRepository.java       # Доступ к БД (User)
 │   ├── ActivityRepository.java   # Доступ к БД (Activity)
+│   ├── ExercisesRepository.java   # Доступ к БД (Exercises)
 │   └── ProfileRepository.java    # Доступ к БД (Profile)
 ├── entity/
 │   ├── UserEntity.java           # Таблица User
 │   ├── ActivityEntity.java       # Таблица Activity
+│   ├── ExercisesEntity.java      # Таблица Exercises
 │   └── ProfileEntity.java        # Таблица Profile
 ├── dto/
 │   ├── RegisterRequest.java      # DTO для регистрации
@@ -253,6 +324,7 @@ src/main/java/github/m1xexsu/stdfitnessappserver/
           "name": "Get All",
           "request": {
             "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer <token>"}],
             "url": {"raw": "http://localhost:8080/activities"}
           }
         },
@@ -260,12 +332,43 @@ src/main/java/github/m1xexsu/stdfitnessappserver/
           "name": "Create",
           "request": {
             "method": "POST",
-            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer <token>"}
+            ],
             "body": {
               "mode": "raw",
               "raw": "{\"user\":{\"user_id\":1},\"activity_date\":\"2026-04-24T10:30:00Z\",\"steps\":5000,\"burnt\":250,\"goal_achieved\":true}"
             },
             "url": {"raw": "http://localhost:8080/activities"}
+          }
+        }
+      ]
+    },
+    {
+      "name": "Exercises",
+      "item": [
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [{"key": "Authorization", "value": "Bearer <token>"}],
+            "url": {"raw": "http://localhost:8080/exercises"}
+          }
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {"key": "Content-Type", "value": "application/json"},
+              {"key": "Authorization", "value": "Bearer <token>"}
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\":\"Push-up\",\"description\":\"Классические отжимания от пола\",\"file_path\":\"/images/exercises/push-up.png\"}"
+            },
+            "url": {"raw": "http://localhost:8080/exercises"}
           }
         }
       ]
@@ -278,11 +381,11 @@ src/main/java/github/m1xexsu/stdfitnessappserver/
 
 ## Note
 
-- **Авторизация**: На этом этапе авторизация максимально простая (plain text пароль, без JWT).
-  Для production нужно добавить:
-  - Хеширование паролей (BCrypt)
-  - JWT токены
-  - Валидация токенов
+- **Авторизация**: API использует JWT Bearer токены. Пароли хранятся в виде BCrypt-хэша.
+  Для production обычно дополнительно настраивают:
+  - refresh token
+  - отзыв токенов (logout / revoke)
+  - роли и права доступа
   
 - **CSRF**: Отключен для разработки. Для production нужно включить.
 

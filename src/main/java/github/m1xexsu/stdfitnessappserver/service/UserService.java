@@ -2,9 +2,11 @@ package github.m1xexsu.stdfitnessappserver.service;
 
 import github.m1xexsu.stdfitnessappserver.dto.UserDetailsResponse;
 import github.m1xexsu.stdfitnessappserver.entity.ActivityEntity;
+import github.m1xexsu.stdfitnessappserver.entity.ExercisesEntity;
 import github.m1xexsu.stdfitnessappserver.entity.ProfileEntity;
 import github.m1xexsu.stdfitnessappserver.entity.UserEntity;
 import github.m1xexsu.stdfitnessappserver.repository.ActivityRepository;
+import github.m1xexsu.stdfitnessappserver.repository.ExercisesRepository;
 import github.m1xexsu.stdfitnessappserver.repository.ProfileRepository;
 import github.m1xexsu.stdfitnessappserver.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,15 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserService {
+
+    private final ExercisesRepository exercisesRepository;
     private final UserRepository userRepository;
     private final ProfileRepository profileRepository;
     private final ActivityRepository activityRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository, ProfileRepository profileRepository, ActivityRepository activityRepository, PasswordEncoder passwordEncoder) {
+    public UserService(ExercisesRepository exercisesRepository, UserRepository userRepository, ProfileRepository profileRepository, ActivityRepository activityRepository, PasswordEncoder passwordEncoder) {
+        this.exercisesRepository = exercisesRepository;
         this.userRepository = userRepository;
         this.profileRepository = profileRepository;
         this.activityRepository = activityRepository;
@@ -56,11 +61,11 @@ public class UserService {
     /**
      * Ищет пользователя по username.
      *
-     * @param username имя пользователя
+     * @param email имя пользователя
      * @return найденный пользователь или пустой результат
      */
-    public Optional<UserEntity> findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<UserEntity> findByUsername(String email) {
+        return userRepository.findByUsername(email);
     }
 
     /**
@@ -106,6 +111,11 @@ public class UserService {
 
             return response;
         });
+    }
+
+    public ExercisesEntity getRecomendation()
+    {
+        return exercisesRepository.findAll().getFirst();
     }
 
     //public List<UserEntity> getAllUsers() {
@@ -156,4 +166,6 @@ public class UserService {
         response.setGoalAchieved(activity.isGoal_achieved());
         return response;
     }
+
+
 }

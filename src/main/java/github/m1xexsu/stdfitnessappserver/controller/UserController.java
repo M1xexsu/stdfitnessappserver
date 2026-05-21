@@ -16,7 +16,7 @@ import java.util.Set;
  * REST-контроллер для получения данных пользователей по идентификатору.
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
     private static final Set<String> SUPPORTED_INCLUDES = Set.of("profile", "activities");
 
@@ -44,6 +44,19 @@ public class UserController {
                     .<ResponseEntity<?>>map(ResponseEntity::ok)
                     .orElseGet(() -> ResponseEntity.notFound().build());
         } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{id}/recommendation")
+    public ResponseEntity<?> getRecomendation(@PathVariable long id)
+    {
+        try
+        {
+            return ResponseEntity.ok(userService.getRecomendation());
+        }
+        catch (IllegalArgumentException e)
+        {
             return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
         }
     }
