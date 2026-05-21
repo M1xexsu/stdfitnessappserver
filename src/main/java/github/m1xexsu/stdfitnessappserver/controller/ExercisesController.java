@@ -42,6 +42,11 @@ public class ExercisesController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @GetMapping("/{type}")
+    public ResponseEntity<?> getExerciseById(@PathVariable String type) {
+        return ResponseEntity.ok(exercisesService.getExerciseByType(type));
+    }
+
     /**
      * Создает новое упражнение.
      *

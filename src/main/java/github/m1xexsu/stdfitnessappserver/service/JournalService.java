@@ -65,7 +65,6 @@ public class JournalService {
         return journalRepository.findById(id)
                 .map(existing -> {
                     existing.setDate(updated.getDate());
-                    existing.setTime_minutes(updated.getTime_minutes());
                     existing.setScore(updated.getScore());
                     existing.setBurnt(updated.getBurnt());
                     existing.setExercises(updated.getExercises());

@@ -32,7 +32,7 @@ public class JournalController {
     /**
      * Возвращает все записи журнала конкретного пользователя.
      */
-    @GetMapping("/user/{userId}")
+    @GetMapping("/user/{userId}/history")
     public ResponseEntity<?> getJournalByUser(@PathVariable Long userId) {
         return resolveUser(userId)
                 .map(user -> ResponseEntity.ok(journalService.findByUser(user)))

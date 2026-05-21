@@ -16,6 +16,8 @@ public class ExercisesEntity {
     private String name;
     private String description;
     private String file_path;
+    private String type;
+    private String calories_burnt;
 
     public Long getExercise_id() {
         return exercise_id;
@@ -48,4 +50,21 @@ public class ExercisesEntity {
     public void setFile_path(String file_path) {
         this.file_path = file_path;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCaloriesBurnt() {
+        return calories_burnt;
+    }
+
+    public void setCaloriesBurnt(String caloriesBurnt) {
+        this.calories_burnt = caloriesBurnt;
+    }
+
 }

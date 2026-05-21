@@ -4,6 +4,7 @@ import github.m1xexsu.stdfitnessappserver.entity.ExercisesEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -18,5 +19,7 @@ public interface ExercisesRepository extends JpaRepository<ExercisesEntity, Long
      * @return найденное упражнение или пустой результат
      */
     Optional<ExercisesEntity> findByName(String name);
+
+    List<ExercisesEntity> findByType(String type);
 }
 

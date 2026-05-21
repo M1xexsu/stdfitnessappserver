@@ -47,6 +47,10 @@ public class ExercisesService {
         return exercisesRepository.findByName(name);
     }
 
+    public List<ExercisesEntity> getExerciseByType(String type) {
+        return exercisesRepository.findByType(type);
+    }
+
     /**
      * Создает новое упражнение.
      *

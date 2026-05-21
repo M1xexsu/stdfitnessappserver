@@ -30,7 +30,6 @@ public class JournalEntity {
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
-    private int time_minutes;
     private int score;
     private int burnt;
 
@@ -64,14 +63,6 @@ public class JournalEntity {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public int getTime_minutes() {
-        return time_minutes;
-    }
-
-    public void setTime_minutes(int time_minutes) {
-        this.time_minutes = time_minutes;
     }
 
     public int getScore() {
