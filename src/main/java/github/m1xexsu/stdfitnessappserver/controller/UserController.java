@@ -1,12 +1,11 @@
 package github.m1xexsu.stdfitnessappserver.controller;
 
+import github.m1xexsu.stdfitnessappserver.dto.RegisterRequest;
+import github.m1xexsu.stdfitnessappserver.entity.UserEntity;
 import github.m1xexsu.stdfitnessappserver.service.UserService;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashSet;
 import java.util.Locale;
@@ -48,12 +47,38 @@ public class UserController {
         }
     }
 
+    @PostMapping("/{id}")
+    public ResponseEntity<?> changeUserCreds(@PathVariable long id, @RequestBody RegisterRequest request)
+    {
+        try
+        {
+            return ResponseEntity.ok(userService.changeCreds(id, request.getUsername(), request.getEmail()));
+        }
+        catch (IllegalArgumentException e)
+        {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        }
+    }
+
     @GetMapping("/{id}/recommendation")
     public ResponseEntity<?> getRecomendation(@PathVariable long id)
     {
         try
         {
             return ResponseEntity.ok(userService.getRecomendation());
+        }
+        catch (IllegalArgumentException e)
+        {
+            return ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> nuke(@PathVariable long id)
+    {
+        try
+        {
+            return ResponseEntity.ok(userService.nuke(id));
         }
         catch (IllegalArgumentException e)
         {

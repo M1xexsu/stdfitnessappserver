@@ -58,6 +58,24 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public UserEntity changeCreds(long id, String username, String email)
+    {
+        return userRepository.findById(id).map(update ->
+                        {
+                            update.setUsername(username);
+                            update.setEmail(email);
+                            return update;
+                        }
+                )
+                .orElseThrow(() -> new RuntimeException("User doesn't exists"));
+    }
+
+    public String nuke(long id)
+    {//нужен функционал каскадного удаления чёт потом придумаю
+        userRepository.deleteById(id);
+        return "job done!!!!!!!!!!\n :DDDDDD";
+    }
+
     /**
      * Ищет пользователя по username.
      *
