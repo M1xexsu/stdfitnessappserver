@@ -73,6 +73,8 @@ public class ExercisesService {
             exercise.setName(updatedExercise.getName());
             exercise.setDescription(updatedExercise.getDescription());
             exercise.setFile_path(updatedExercise.getFile_path());
+            exercise.setType(updatedExercise.getType());
+            exercise.setCaloriesBurnt(updatedExercise.getCaloriesBurnt());
             return exercisesRepository.save(exercise);
         }).orElseThrow(() -> new RuntimeException("Exercise not found"));
     }

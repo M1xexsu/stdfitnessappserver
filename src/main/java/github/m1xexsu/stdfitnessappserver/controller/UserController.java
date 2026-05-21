@@ -73,7 +73,24 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/users/{id}")
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable long id,
+                                        @RequestBody RegisterRequest request) {
+        try {
+            return ResponseEntity.ok(
+                    userService.changeCreds(
+                            id,
+                            request.getUsername(),
+                            request.getEmail()
+                    )
+            );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest()
+                    .body(new ErrorResponse(e.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<?> nuke(@PathVariable long id)
     {
         try
