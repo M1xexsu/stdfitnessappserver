@@ -1,1 +1,16 @@
-services: {}
+services:
+
+  db:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: your_password
+      MARIADB_USER: root
+      MARIADB_DATABASE: stdfitness
+    ports:
+     - 3306:3306
+    volumes:
+     - datadir:/var/lib/mysql:Z
+
+volumes:
+  datadir: 
