@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import tools.jackson.databind.ObjectMapper;
+
+import java.util.List;
 
 /**
  * REST-контроллер для журнала тренировок.
@@ -34,9 +37,29 @@ public class JournalController {
      */
     @GetMapping("/user/{userId}/history")
     public ResponseEntity<?> getJournalByUser(@PathVariable Long userId) {
+
         return resolveUser(userId)
-                .map(user -> ResponseEntity.ok(journalService.findByUser(user)))
+                .map(user -> {
+                    var result = journalService.findByUser(user);
+
+                    logJson(result); // 👈 ВОТ ТУТ ЛОГ
+
+                    return ResponseEntity.ok(result);
+                })
                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    private void logJson(Object obj) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writerWithDefaultPrettyPrinter()
+                    .writeValueAsString(obj);
+
+            System.out.println("===== RESPONSE JSON =====");
+            System.out.println(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -1,6 +1,7 @@
 package github.m1xexsu.stdfitnessappserver.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * JPA-сущность упражнения из справочника.
@@ -16,7 +17,9 @@ public class ExercisesEntity {
     private String name;
     private String description;
     private String file_path;
+    @JsonProperty("type")
     private String type;
+    @JsonProperty("calories_burnt")
     private String calories_burnt;
 
     public Long getExercise_id() {

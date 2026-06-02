@@ -19,7 +19,7 @@ public class JournalEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private UserEntity user;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "Journal_Exercises",
         joinColumns = @JoinColumn(name = "journal_id"),
