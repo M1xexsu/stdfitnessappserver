@@ -11,6 +11,26 @@ services:
      - 3306:3306
     volumes:
      - datadir:/var/lib/mysql:Z
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  ktor-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "9911:8080" # Внешний порт : Порт внутри контейнера Ktor
+    environment:
+      # Передаем параметры подключения через переменные окружения
+      - DB_URL=jdbc:mariadb://db:3306/stdfitness
+      - DB_USER=root
+      - DB_PASSWORD=your_password
+    depends_on:
+      db:
+        condition: service_healthy
 
 volumes:
   datadir: 
